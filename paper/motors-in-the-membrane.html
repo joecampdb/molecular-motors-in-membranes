@@ -1,0 +1,309 @@
+<title>Motors in the Membrane</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #fdfdfb; --plane: #f3f3ef; --ink: #14161a; --ink-2: #414652; --ink-3: #6f7480;
+    --rule: #d9dad2; --rule-2: #e9eae3; --accent: #7a2518; --accent-2: #1d4e89; --band: #eceadf;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper: #16181c; --plane: #101216; --ink: #eceef2; --ink-2: #b9bec9; --ink-3: #8b909c;
+      --rule: #2e323a; --rule-2: #23262c; --accent: #e08a72; --accent-2: #7fb0e8; --band: #1e2128;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #16181c; --plane: #101216; --ink: #eceef2; --ink-2: #b9bec9; --ink-3: #8b909c;
+    --rule: #2e323a; --rule-2: #23262c; --accent: #e08a72; --accent-2: #7fb0e8; --band: #1e2128;
+  }
+  body { background: var(--plane); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.62; padding-inline: 16px; padding-block: 0 72px; }
+  .sheet { max-width: 830px; margin: 0 auto; background: var(--paper); padding: 0 clamp(18px, 5vw, 62px) 56px; border-inline: 1px solid var(--rule-2); }
+  .banner { background: var(--band); margin-inline: calc(clamp(18px, 5vw, 62px) * -1); padding: 10px clamp(18px, 5vw, 62px); font-family: var(--sans); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 4px 20px; border-bottom: 1px solid var(--rule); }
+  h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(27px, 4.4vw, 38px); line-height: 1.16; margin: 34px 0 6px; letter-spacing: -.012em; text-wrap: balance; }
+  .subtitle { font-size: clamp(17px, 2.4vw, 21px); color: var(--ink-2); font-weight: 400; margin: 0 0 22px; text-wrap: pretty; }
+  .authors { font-family: var(--sans); font-size: 15px; margin: 0 0 4px; }
+  .affil, .corr { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); margin: 0 0 3px; }
+  .meta { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--rule-2); display: grid; gap: 3px; }
+  .meta b { color: var(--ink-2); font-weight: 500; }
+  .abstract { background: var(--plane); border: 1px solid var(--rule-2); border-left: 3px solid var(--accent); padding: 18px 22px; margin: 28px 0 8px; font-size: 16px; }
+  .abstract h2 { font-family: var(--sans); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 8px; font-weight: 600; }
+  .abstract p { margin: 0 0 10px; }
+  .abstract p:last-child { margin: 0; }
+  .kw { font-family: var(--sans); font-size: 13px; color: var(--ink-2); margin: 10px 0 0; }
+  h2.sec { font-family: var(--sans); font-weight: 600; font-size: 20px; margin: 40px 0 10px; letter-spacing: -.005em; }
+  h3 { font-family: var(--sans); font-weight: 600; font-size: 15.5px; margin: 24px 0 6px; color: var(--ink); }
+  h4 { font-family: var(--sans); font-weight: 600; font-size: 14px; margin: 18px 0 4px; color: var(--ink-2); }
+  p { margin: 0 0 14px; text-wrap: pretty; }
+  ul, ol { margin: 0 0 14px; padding-left: 24px; }
+  li { margin-bottom: 7px; }
+  figure { margin: 28px 0; }
+  figure img, video { width: 100%; display: block; border: 1px solid var(--rule-2); border-radius: 2px; background: #111; }
+  figure img.plot { background: var(--paper); }
+  figcaption { font-size: 14px; color: var(--ink-2); margin-top: 9px; line-height: 1.5; }
+  figcaption b { color: var(--ink); font-weight: 600; }
+  .tablewrap { overflow-x: auto; margin: 20px 0; }
+  table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 13.5px; }
+  caption { caption-side: top; text-align: left; font-size: 14px; color: var(--ink-2); margin-bottom: 9px; line-height: 1.5; }
+  caption b { color: var(--ink); font-weight: 600; }
+  th, td { text-align: left; padding: 8px 14px 8px 0; border-bottom: 1px solid var(--rule-2); vertical-align: top; }
+  thead th { border-bottom: 1px solid var(--rule); font-weight: 600; color: var(--ink-2); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-right: 22px; }
+  tbody tr:last-child td { border-bottom: 1px solid var(--rule); }
+  .callout { border: 1px solid var(--rule); border-left: 3px solid var(--accent-2); background: var(--plane); padding: 14px 18px; margin: 20px 0; font-size: 16px; }
+  .callout p { margin: 0; }
+  code { font-family: var(--mono); font-size: .875em; background: var(--plane); padding: 1px 4px; border-radius: 3px; }
+  .refs { font-size: 14px; counter-reset: ref; padding-left: 0; list-style: none; }
+  .refs li { counter-increment: ref; padding-left: 34px; position: relative; margin-bottom: 9px; color: var(--ink-2); }
+  .refs li::before { content: "[" counter(ref) "]"; position: absolute; left: 0; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+  a { color: var(--accent-2); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .foot { font-family: var(--sans); font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--rule); margin-top: 34px; padding-top: 16px; }
+  sup.cite { font-family: var(--sans); font-size: 11px; color: var(--accent-2); }
+  .note { font-size: 14px; color: var(--ink-3); font-style: italic; }
+</style>
+
+<div class="sheet">
+  <div class="banner">
+    <span>Preprint &middot; not peer reviewed</span>
+    <span>Computational biophysics</span>
+    <span>Posted 27 September 2026</span>
+  </div>
+
+  <h1>Motors in the Membrane</h1>
+  <p class="subtitle">Ten-replica atomistic simulation of light-driven molecular motors in a bacterial-mimetic bilayer, with a measured sampling floor and a quantum-chemical audit of the ligand force field</p>
+
+  <p class="authors">[Author One]<sup>1,*</sup>, [Author Two]<sup>1</sup></p>
+  <p class="affil"><sup>1</sup> Independent computational biophysics group</p>
+  <p class="corr"><sup>*</sup> Correspondence to the address listed in the repository metadata</p>
+
+  <div class="meta">
+    <span><b>DOI</b> not yet assigned &mdash; to be minted on deposition</span>
+    <span><b>Preprint server</b> not yet deposited</span>
+    <span><b>Code and data</b> github.com/joecampdb/molecular-motors-in-membranes</span>
+    <span><b>Aggregate sampling</b> 1.0 &micro;s &middot; 10 &times; 100 ns &middot; 76 h wall clock &middot; 1 &times; NVIDIA RTX 4070</span>
+    <span><b>License</b> to be selected prior to deposition</span>
+  </div>
+
+  <div class="abstract">
+    <h2>Abstract</h2>
+    <p><b>Background.</b> Light-activated synthetic molecular motors exhibit broad-spectrum antibacterial activity attributed to mechanical disruption of the bacterial membrane. Prior atomistic simulation reported that two structural variants, designated MM1 and MM2, adopt markedly different orientations of their rotor axle relative to the membrane plane, approximately 15&deg; and 60&deg; respectively. That contrast underpins mechanistic arguments linking molecular architecture to membrane activity, yet it rests on limited replication.</p>
+    <p><b>Methods.</b> We performed ten independent 100 ns all-atom simulations (five per motor; 1.0 &micro;s aggregate) of the protonated MM1 and MM2 cations embedded in a POPE:POPG (1:3) bilayer with explicit TIP3P water and 150 mM NaCl. The entire workflow &mdash; ligand parameterisation, bilayer assembly, topology conversion, production dynamics, analysis and rendering &mdash; was executed with software carrying no institutional licensing requirement, on a single consumer graphics processor. Topology conversion was validated by single-point energy decomposition. Statistical resolution was established by integrated autocorrelation analysis and by comparison of within-replica and between-replica variance. Ligand torsion parameters were audited against relaxed GFN2-xTB scans.</p>
+    <p><b>Results.</b> Both motors adopt a conserved anchoring geometry in every replica: the protonated dimethylammonium resides at the phosphate plane (19.9 &plusmn; 0.8 &Aring; and 21.4 &plusmn; 0.6 &Aring; above the bilayer midplane) with the rotor axle 5&ndash;6 &Aring; deeper (15.5 &plusmn; 0.2 &Aring; and 14.2 &plusmn; 0.7 &Aring;). No motor exited the bilayer. The reported orientational contrast was not reproduced: axle tilt from the membrane plane was 27.9 &plusmn; 6.1&deg; (MM1) and 36.8 &plusmn; 5.5&deg; (MM2), a difference of 8.8 &plusmn; 8.2&deg;. The tilt coordinate has an integrated autocorrelation time of 3.9 ns, yielding approximately eight statistically independent samples per 70 ns analysis window; between-replica scatter exceeded the within-replica prediction by a factor of 3.5, identifying a slow degree of freedom inaccessible to any single trajectory. Consequently these data <i>exclude</i> a 45&deg; separation at 5.5 standard errors while remaining consistent with 0&ndash;25&deg;. Resolving the measured difference to two standard errors would require approximately 17 independent replicas per motor. Relaxed GFN2-xTB scans show that GAFF2 reproduces the curvature of the overcrowded alkene (root-mean-square thermal twist 9.4&deg; versus 9.8&deg; at 300 K) but displaces its resting geometry by 20&deg;.</p>
+    <p><b>Conclusions.</b> Membrane anchoring of these motors is robust and reproducible; their differential orientation is not established at accessible sampling. We provide the sampling requirement and the force-field error budget needed to design a decisive experiment, and demonstrate that the underlying capability requires neither institutional software access nor specialised hardware.</p>
+    <p class="kw"><b>Keywords:</b> molecular dynamics &middot; molecular motors &middot; lipid bilayer &middot; antimicrobial &middot; sampling adequacy &middot; force-field validation &middot; reproducibility</p>
+  </div>
+
+  <h2 class="sec">1. Introduction</h2>
+  <p>Synthetic molecular machines that convert photons into directional rotary motion have been advanced as antibacterial agents whose mechanism is mechanical rather than biochemical, and therefore plausibly refractory to conventional resistance pathways.<sup class="cite">[1]</sup> The proposition is attractive: a physical insult to the membrane bypasses the target-modification and efflux mechanisms that defeat small-molecule antibiotics. The proposition is also difficult to verify, because the quantity of interest &mdash; mechanical coupling between a rotor and a lipid environment &mdash; is not directly observable at the relevant scale.</p>
+  <p>Atomistic simulation is the natural instrument, and it has been applied. Two structural variants of a thioxanthene-based motor, denoted MM1 and MM2, were reported to differ substantially in how their rotor axle sits relative to the membrane plane, at roughly 15&deg; and 60&deg;.<sup class="cite">[1]</sup> A contrast of that magnitude would be mechanistically consequential, implying that a modest change in substitution pattern reorients the rotor from lying within the leaflet to standing across it, with corresponding differences in the volume swept during rotation.</p>
+  <p>This work was motivated by adjacent research on modular peptide nanofibres that assemble on bacterial membranes and overcome antimicrobial resistance,<sup class="cite">[2]</sup> which raises the general question of how a membrane-active agent must be positioned to act. We therefore asked a narrower and more tractable question than mechanism: <i>is the reported orientational contrast reproducible under independent construction?</i></p>
+  <p>Three considerations shaped the study. First, orientation and insertion depth are among the observables classical molecular dynamics measures most reliably, requiring neither excited-state treatment nor reactive chemistry. Second, any test of reproducibility is only as strong as its statistical power, which in membrane simulation is routinely asserted rather than measured. Third, the study was constrained to software available without institutional affiliation, excluding the web services and parameter generators on which most membrane simulation depends. That constraint, initially a limitation, produced a transferable result in its own right.</p>
+
+  <h2 class="sec">2. Methods</h2>
+
+  <h3>2.1 Molecular systems</h3>
+  <p>Heavy-atom coordinates for the motor cores were taken from the crystallographic and computational structures tabulated in the source study.<sup class="cite">[1]</sup> The published tables provide truncated aryl&ndash;NH&ndash;CH<sub>3</sub> models; full side chains (aryl&ndash;NH&ndash;CH<sub>2</sub>CH<sub>2</sub>N(CH<sub>3</sub>)<sub>2</sub>) were reconstructed by ETKDGv3 conformer generation with MMFF94s minimisation, holding all 30 source heavy atoms fixed. Both enantiomeric assignments and both of two reported stable conformers were retained as explicit alternatives. The simulated species are the monocations C<sub>31</sub>H<sub>31</sub>N<sub>2</sub>S<sup>+</sup>, protonated at the terminal dimethylamine with the arylamine neutral; no p<i>K</i><sub>a</sub> calculation was performed and this assignment is a stated hypothesis.</p>
+  <p>Each motor was embedded in a POPE:POPG bilayer at 1:3 stoichiometry following the composition of the source study, with TIP3P water, sodium neutralisation and 150 mM NaCl. Final assemblies contained 39,542 atoms: 22 POPE and 67 POPG (45/44 leaflet split), 9,368 waters, 90 Na<sup>+</sup> and 24 Cl<sup>&minus;</sup>, in periodic cells of 6.05 &times; 6.03 &times; 15.01 nm (MM1) and 5.96 &times; 6.02 &times; 14.95 nm (MM2).</p>
+
+  <h3>2.2 Parameterisation</h3>
+  <p>Ligand parameters were assigned with GAFF2 atom typing and AM1-BCC charges computed by semi-empirical optimisation; lipids used Lipid21<sup class="cite">[3]</sup> and water the Amber TIP3P model. Bilayer assembly used <code>packmol-memgen</code><sup class="cite">[4]</sup> with <code>tleap</code>. Thirty-six parameters per ligand were completed by analogy. Their penalty scores are not uniformly distributed: they concentrate on the torsions spanning the overcrowded C=C axle and its immediate substituents, reaching 541 for the ca&ndash;cc&ndash;cf&ndash;c5 dihedral. This is precisely the coordinate whose orientation constitutes the study's primary observable, and it motivated the audit described in &sect;2.8.</p>
+  <div class="callout"><p>The workflow deliberately avoids CHARMM-GUI and the CGenFF parameter generator, which require institutional registration and carry separate terms for commercial use. This is a departure from the source study, which used CHARMM36 with CGenFF ligand parameters, and constitutes an independent replication under a different force-field family rather than an attempted exact reproduction.</p></div>
+
+  <h3>2.3 Topology conversion and its validation</h3>
+  <p>Amber topologies were converted to GROMACS format with ParmEd. Direct conversion was found to be silently incorrect for this system: Lipid21 assigns non-uniform 1&ndash;4 Lennard-Jones scaling (SCNB of 2.0 and 6.0 for different dihedral classes), and the direct writer emitted a single global scaling factor with implicit pair generation, doubling the 1&ndash;4 Lennard-Jones energy by 4.9 MJ mol<sup>&minus;1</sup> per system. Conversion was therefore routed through an OpenMM <code>System</code> object, which emits explicit per-pair parameters. Fidelity was confirmed by single-point energy decomposition on identical coordinates: bonded, angular and torsional terms agreed exactly, and total energies agreed to 0.004 and 0.013 kJ mol<sup>&minus;1</sup> for MM1 and MM2 respectively. Reference 1&ndash;4 sums are reported in Table 1 to permit independent verification.</p>
+
+  <h3>2.4 Equilibration</h3>
+  <p>Packing left residual close contacts (43 and 22 non-bonded pairs below 1 &Aring;, minimum 0.20 &Aring;), removed by L-BFGS minimisation in the Amber representation prior to conversion; heavy atoms moved 1.72 and 1.74 &Aring; root-mean-square and the closest non-bonded contact relaxed to 1.49 &Aring;. Steepest-descent minimisation, 100 ps NVT at 1 fs and 500 ps semi-isotropic NPT at 2 fs were followed by a further 20 ns NPT to permit lateral relaxation from the packed cell.</p>
+  <p>We record a protocol deficiency. During unrestrained NVT at the packed cell dimension, the leaflet was approximately 30% under-packed and both motors migrated to the head-group/water interface within 20 ps, re-inserting within 200 ps of NPT as the box contracted. The production ensembles therefore sample a re-inserted configuration rather than the constructed pose. Position restraints on the ligand during warm-up, as used in staged commercial protocols, would prevent this and are recommended for any replication.</p>
+
+  <h3>2.5 Production</h3>
+  <p>Five replicas per motor were propagated for 100 ns at 2 fs with Nos&eacute;&ndash;Hoover thermostatting at 298 K and Parrinello&ndash;Rahman semi-isotropic barostatting at 1 bar, particle-mesh Ewald electrostatics, 1.0 nm real-space cutoffs and LINCS constraints on hydrogen-containing bonds. Replica 1 continued from the extended NPT state; replicas 2&ndash;5 were reinitialised from the same coordinates with independently seeded velocities. A pre-production gate confirmed ligand&ndash;bilayer association (|COM<sub>lig</sub> &minus; COM<sub>lipid</sub>| = 1.36 and 1.38 nm). <b>These are velocity-seed replicas of a single starting configuration, not independently constructed poses</b>, a limitation whose consequences are quantified in &sect;3.4.</p>
+
+  <h3>2.6 Observables</h3>
+  <p>All observables were computed with GROMACS analysis utilities, without third-party trajectory libraries, at 10 ps resolution. Axle tilt is the angle between the C7=C14 vector and the membrane plane, reported as |90&deg; &minus; &theta;<sub>z</sub>|, such that 0&deg; denotes an axle lying in the plane. Insertion depths are <i>z</i>-displacements of the axle midpoint and of the ammonium nitrogen relative to the centre of mass of all 89 lipid phosphorus atoms. Bilayer thickness is the phosphorus interleaflet separation; area per lipid is the lateral cell area divided by 44.5.</p>
+
+  <h3>2.7 Statistical treatment</h3>
+  <p>The analysis window is 30&ndash;100 ns per replica. Frames within a replica are strongly autocorrelated and are not treated as independent: reported uncertainties are standard errors over the five replica means (<i>n</i> = 5). Integrated autocorrelation times were obtained by fast-Fourier autocorrelation with Sokal automatic windowing (window at the first <i>M</i> satisfying <i>M</i> &ge; 6&tau;), executed in double precision on the graphics processor. Within-replica and between-replica variance were compared explicitly; their ratio is reported as the central diagnostic of sampling adequacy.</p>
+
+  <h3>2.8 Quantum-chemical audit of ligand torsions</h3>
+  <p>Relaxed torsion scans were computed with GFN2-xTB<sup class="cite">[5]</sup> on the MM1 monocation, using the atom ordering of the production topology so that quantum and classical profiles are directly comparable. Two coordinates were scanned: the overcrowded C=C twist (C3&ndash;C7=C14&ndash;C15, &minus;70&deg; to +70&deg;, 29 points) and the rotatable aryl&ndash;amine bond orienting the anchoring tail (full rotation, 37 points). Classical profiles were generated by restrained minimisation under the identical restraint protocol, with restraint energy excluded from the reported values. Force-field energies were additionally decomposed by force group to separate torsional from non-bonded contributions, a control that proved decisive (&sect;3.5).</p>
+
+  <h3>2.9 Engine selection</h3>
+  <p>Engine choice was benchmarked rather than assumed. On the target hardware, LAMMPS with the KOKKOS CUDA backend sustained 9.9 ns day<sup>&minus;1</sup> on a 32,000-atom CHARMM membrane benchmark, statistically indistinguishable from 10.5 ns day<sup>&minus;1</sup> on 16 CPU threads. KOKKOS operates in double precision, and consumer-class GPUs execute double-precision arithmetic at 1/64 of single-precision throughput. GROMACS in mixed precision achieved 409 ns day<sup>&minus;1</sup> on a size-matched system. GROMACS was therefore adopted, with LAMMPS retained only as an independent force evaluator.</p>
+
+  <h3>2.10 Visualisation</h3>
+  <p>Renders were produced in Blender with GPU path tracing, from trajectories exported after per-residue temporal unwrapping. We note that <code>trjconv -pbc mol -center</code> re-wraps whole molecules as the centring target migrates, displacing 4.3% of atoms by more than 10 &Aring; between adjacent frames; unwrapping reduces this to 0.07%. Displayed coordinates are smoothed by a 1 ns centred running mean, stated on every frame, and this smoothing is not applied to any analysis.</p>
+
+  <h3>2.11 Computational environment</h3>
+  <p>All calculations were executed on a single workstation: Intel Core i7-13700KF, NVIDIA GeForce RTX 4070 (12 GB), 32 GB system memory, under Ubuntu 22.04 within the Windows Subsystem for Linux. Software: AmberTools 24.8, GROMACS 2026.3 (CUDA), OpenMM 8.5.2, ParmEd 4.3.1, xtb (GFN2), JAX 0.6.2, Blender 5.2.1.</p>
+
+  <h2 class="sec">3. Results</h2>
+
+  <figure>
+    <img class="plot" src="media/fig1-cross-section.png" alt="Cross-section of the simulated bilayer with the motor in the upper leaflet" width="1920" height="1080" style="height:auto">
+    <figcaption><b>Figure 1. Simulated system.</b> Cross-section through the POPE:POPG bilayer with MM1 resident in the upper leaflet at 40 ns of replica 1. The motor is rendered in warm tones against a desaturated membrane; the rotor axle carbons are marked in red and the protonated ammonium in green; cyan spheres are lipid phosphorus atoms delineating the two leaflet planes. Lipids anterior to the motor are removed each frame to expose the binding pocket. Water and ions are omitted and lipid hydrogens are not drawn. Scale bar 1 nm (exact; orthographic projection). Animations of the full trajectory are provided as Supplementary Videos S1 and S2.</figcaption>
+  </figure>
+
+  <h3>3.1 Membrane integrity and system stability</h3>
+  <p>Bilayer properties were indistinguishable between systems and stable after approximately 50 ns: phosphorus interleaflet separation 4.10 &plusmn; 0.03 nm (MM1) and 4.11 &plusmn; 0.02 nm (MM2), area per lipid 57.3 &plusmn; 0.5 &Aring;<sup>2</sup> and 57.2 &plusmn; 0.3 &Aring;<sup>2</sup>. The latter is at the low end of expectation for this composition and is plausibly attributable to sodium condensation on phosphatidylglycerol head groups under this force field; it is reported as observed and no parameter was adjusted to modify it.</p>
+
+  <h3>3.2 Anchoring geometry is conserved and reproducible</h3>
+  <p>Both motors adopt the same amphipathic disposition in every replica. The protonated ammonium resides at the phosphate plane, which lies approximately 20.5 &Aring; above the bilayer midplane, and the rotor axle sits 5&ndash;6 &Aring; deeper, within the glycerol and upper acyl region (Table 2). Standard errors on depth are 0.2&ndash;0.8 &Aring;. Across all 100,010 analysed frames the axle midpoint remained between 8.3 and 20.7 &Aring; (MM1) and 7.7 and 23.6 &Aring; (MM2) of the midplane, and no motor exited the bilayer in any replica. This is the most robust finding of the study, though it is also the least surprising: it is the disposition expected of an amphiphilic cation bearing a delocalised hydrophobic core.</p>
+
+  <h3>3.3 The reported orientational contrast is not reproduced</h3>
+  <p>Axle tilt averaged 27.9 &plusmn; 6.1&deg; for MM1 and 36.8 &plusmn; 5.5&deg; for MM2 (Table 2, Figure 2). The ordering matches the source study, in that MM1 lies closer to the membrane plane, but the magnitude does not: the measured difference is 8.8 &plusmn; 8.2&deg; against a reported contrast of approximately 45&deg;. Individual replica means span 15&ndash;49&deg; (MM1) and 25&ndash;54&deg; (MM2); the distributions overlap substantially, and both motors visit near-planar and strongly inclined configurations on tens-of-nanosecond timescales. Pooled over 30&ndash;100 ns, 61% of MM1 frames and 38% of MM2 frames lie below 30&deg;.</p>
+  <p>Neither system is converged in this coordinate. Block-averaged tilt for MM2 rises monotonically from 28&deg; to 40&deg; across its trajectory, and the MM1 axle migrates outward by approximately 3 &Aring;. These are trends, not equilibrium values, and are reported as such.</p>
+
+  <figure>
+    <img class="plot" src="media/fig2-tilt-depth.png" alt="Axle tilt time courses, replica means and insertion depth for both motors" width="2200" height="1440" style="height:auto">
+    <figcaption><b>Figure 2. Orientation and depth across ten replicas.</b> Upper panels: axle tilt from the membrane plane as 1 ns running means, five replicas per motor; the shaded interval (0&ndash;30 ns) is excluded from analysis. Horizontal rules mark the orientations reported in the source study. Lower left: per-replica means with motor mean and standard error over replicas (<i>n</i> = 5); open diamonds are the source-study comparators. Lower right: axle midpoint height above the bilayer midplane, with the upper phosphate plane indicated. Replica colours are consistent across panels.</figcaption>
+  </figure>
+
+  <h3>3.4 A measured sampling floor</h3>
+  <p>The tilt coordinate has an integrated autocorrelation time of 3.9 ns (per-motor means 4.13 ns and 3.77 ns), so a 70 ns analysis window contains approximately eight statistically independent observations, not the 7,000 recorded frames. Propagating the within-replica standard deviation through that autocorrelation predicts that individual replica means should scatter by 3.7&deg; (MM1) and 4.1&deg; (MM2). The scatter actually observed is 13.7&deg; and 12.2&deg; &mdash; larger by factors of 3.7 and 2.9.</p>
+  <div class="callout"><p>This discrepancy is the central methodological result. Variance in the orientational observable is not dominated by the fast motion that a single trajectory samples; it is dominated by a slow degree of freedom that a single 100 ns trajectory does not sample at all. Extending individual trajectories therefore yields far less statistical return than initiating additional, genuinely independent replicas.</p></div>
+  <p>The consequence for the present comparison is quantitative. With the observed between-replica scatter and five replicas per motor, the standard error on the inter-motor difference is 8.2&deg;. A genuine 45&deg; separation would lie 5.5 standard errors from zero and could not plausibly have escaped detection. <b>These data therefore exclude a 45&deg; orientational contrast, while remaining consistent with any separation between zero and approximately 25&deg;.</b> This is a materially stronger statement than non-reproduction, and it is obtainable only because the sampling floor was measured rather than assumed. Resolving the measured 8.8&deg; difference to two standard errors would require approximately 17 independent replicas per motor &mdash; a defined and affordable target of roughly one week on the hardware described.</p>
+
+  <h3>3.5 Force-field fidelity at the measured coordinate</h3>
+  <p>The principal internal threat to these conclusions is that the ligand torsions governing the measured coordinate were assigned by analogy. Relaxed GFN2-xTB scans address this directly (Figure 3).</p>
+  <p>For the overcrowded alkene, force-group decomposition confirms the comparison is diagnostic of torsion parameters: torsional terms span 23.5 kcal mol<sup>&minus;1</sup> along the scan against 4.9 kcal mol<sup>&minus;1</sup> from non-bonded terms. GAFF2 reproduces the curvature of this coordinate well &mdash; the implied root-mean-square thermal twist at 300 K is 9.4&deg; against 9.8&deg; from GFN2-xTB &mdash; but locates its minimum at +19.5&deg; where the quantum reference places it at &minus;0.1&deg;, essentially planar. A systematic 20&deg; displacement in the resting geometry of the very bond whose orientation constitutes the primary observable is a material, and correctable, source of bias.</p>
+  <p>For the aryl&ndash;amine torsion the classical profile spans 14.9 kcal mol<sup>&minus;1</sup> against 3.7 kcal mol<sup>&minus;1</sup> quantum-mechanically, an apparently severe discrepancy. Decomposition shows it is not attributable to torsion parameters: 11.6 kcal mol<sup>&minus;1</sup> of the classical span arises from non-bonded terms and only 6.5 kcal mol<sup>&minus;1</sup> from torsional terms, reflecting electrostatic interaction of the cationic tail with the aromatic system in vacuum &mdash; interactions that are screened in the solvated bilayer. This comparison is therefore <i>not</i> evidence against the parameter set and is not treated as such. We report it because the uncorrected number would have supported an incorrect conclusion.</p>
+
+  <figure>
+    <img class="plot" src="media/fig3-torsions.png" alt="GFN2-xTB and GAFF2 relaxed torsion profiles for two ligand coordinates" width="2320" height="900" style="height:auto">
+    <figcaption><b>Figure 3. Quantum-chemical audit of ligand torsions.</b> Relaxed scans of the MM1 monocation, identical atom indexing, both in vacuum. Left: the overcrowded C=C twist, where torsional terms dominate the classical profile and the comparison is diagnostic; curvature agrees but the resting geometry is displaced by 20&deg;. Right: the aryl&ndash;amine bond, where the classical profile is dominated by vacuum electrostatics rather than torsion parameters and the comparison is not diagnostic. Vertical rules mark fitted minima.</figcaption>
+  </figure>
+
+  <h3>3.6 Computational economics</h3>
+  <p>Aggregate production of 1.0 &micro;s required 76 hours of wall-clock time on one consumer graphics processor, at sustained rates of 296&ndash;327 ns day<sup>&minus;1</sup> for the 39,542-atom systems. Equilibration added approximately 3 hours; the quantum audit required under two minutes; rendering, which is embarrassingly optional, required 2.5 hours. At prevailing electricity prices the direct energy cost of the production campaign is of order one US dollar per replica. The binding constraint on work of this kind is therefore neither hardware nor licensing, but methodological knowledge.</p>
+
+  <h2 class="sec">4. Discussion</h2>
+  <p>Three conclusions follow, in descending order of confidence.</p>
+  <p><b>Membrane anchoring is established.</b> Both motors insert into the outer leaflet with the cationic group at the phosphate plane and the rotor buried 5&ndash;6 &Aring; below it, reproducibly across ten independent trajectories under a force field different from that of the original report. Any mechanical mechanism must operate from this disposition, which constrains the geometry available to a rotating core: the rotor is not free in bulk hydrophobic medium but is held at the interfacial region where lateral pressure and head-group density are highest.</p>
+  <p><b>The orientational contrast is not established, and is bounded.</b> We emphasise the distinction between failing to observe an effect and excluding it. The present data do the latter for a 45&deg; separation, at 5.5 standard errors. They do not exclude a smaller genuine difference, and the point estimate is positive and in the reported direction. The most probable reconciliations are that the original contrast reflects force-field dependence, or single-trajectory sampling of a coordinate whose slow component we have now quantified, or both. Distinguishing these is a defined experiment, not an open-ended one.</p>
+  <p><b>Sampling adequacy should be measured and reported.</b> The ratio of between-replica to within-replica variance is inexpensive to compute and was, in this case, the difference between a weak and a strong claim. Its value of 3.5 indicates that conventional practice in this subfield &mdash; a small number of trajectories of a few hundred nanoseconds &mdash; is structurally unable to resolve differences of the magnitude routinely reported for membrane orientation. We suggest that the quantity be reported as a matter of routine, alongside the more familiar convergence plots which, as &sect;3.3 illustrates, can appear acceptable while the underlying estimator remains dominated by unsampled slow motion.</p>
+  <p>A secondary observation concerns method access. The complete workflow was executed without institutional licensing. The practical barrier to membrane simulation for small commercial entities, independent investigators and researchers outside well-resourced institutions is not computational and not financial; it is the tacit procedural knowledge embedded in tools that assume academic affiliation. We have deposited the full workflow accordingly.</p>
+
+  <h2 class="sec">5. Limitations</h2>
+  <ul>
+    <li><b>Force-field family differs from the comparator.</b> Lipid21/GAFF2/Amber-TIP3P versus CHARMM36/CGenFF. Agreement or disagreement reflects parameterisation as much as physics. &sect;3.5 quantifies one component: a 20&deg; offset in the resting twist of the measured bond.</li>
+    <li><b>Replicas are not independent constructions.</b> Five velocity seeds from one starting configuration sample one initial condition repeatedly. &sect;3.4 establishes this as the binding constraint on resolution.</li>
+    <li><b>Trajectories are unconverged in the primary observable.</b> The 30&ndash;100 ns window is a compromise; MM2 exhibits monotonic drift throughout.</li>
+    <li><b>Protonation is hypothesised, not computed.</b> The monocationic assignment follows the source study's statement that the molecules were protonated, without atom-level charge assignment or p<i>K</i><sub>a</sub> calculation.</li>
+    <li><b>The ligand was not restrained during warm-up</b>, permitting transient expulsion and re-insertion (&sect;2.4). Production samples the re-inserted configuration.</li>
+    <li><b>The membrane is a two-component model, not a bacterial envelope.</b> Eighty-nine lipids of two species, without lipopolysaccharide, protein, or asymmetry. No inference regarding antibacterial activity is drawn or warranted.</li>
+    <li><b>These are ground-state simulations.</b> No photochemistry, no excited-state dynamics, no driven rotation. They describe where a motor resides, not what it does when illuminated.</li>
+    <li><b>The quantum reference is semi-empirical.</b> GFN2-xTB is reliable near minima; strongly twisted overcrowded alkenes acquire diradical character it does not describe. Both scans are in vacuum.</li>
+  </ul>
+
+  <h2 class="sec">6. Conclusions</h2>
+  <p>Ten independent atomistic trajectories totalling 1.0 &micro;s establish that two light-driven molecular motors adopt a conserved, reproducible anchoring geometry in a bacterial-mimetic bilayer, with the cationic group at the phosphate plane and the rotor axle 5&ndash;6 &Aring; beneath it. They do not reproduce the reported 45&deg; contrast in axle orientation between the two variants; measured autocorrelation and variance decomposition show the data exclude a separation of that magnitude at 5.5 standard errors while remaining consistent with 0&ndash;25&deg;, and specify that approximately 17 independent replicas per motor would resolve the residual difference. A quantum-chemical audit locates a 20&deg; systematic offset in the force-field resting geometry of the measured coordinate, identifying a specific and correctable source of bias. The workflow requires no institutional software licence and no specialised hardware, and is deposited in full.</p>
+
+  <h2 class="sec">Tables</h2>
+
+  <div class="tablewrap">
+    <table>
+      <caption><b>Table 1. System composition and conversion validation.</b> Reference 1&ndash;4 sums are provided to permit independent verification of any reconstruction of these topologies; a zero-step energy evaluation should reproduce them.</caption>
+      <thead><tr><th>Quantity</th><th class="n">MM1</th><th class="n">MM2</th></tr></thead>
+      <tbody>
+        <tr><td>Total atoms</td><td class="n">39,542</td><td class="n">39,542</td></tr>
+        <tr><td>POPE / POPG</td><td class="n">22 / 67</td><td class="n">22 / 67</td></tr>
+        <tr><td>Water molecules</td><td class="n">9,368</td><td class="n">9,368</td></tr>
+        <tr><td>Na<sup>+</sup> / Cl<sup>&minus;</sup></td><td class="n">90 / 24</td><td class="n">90 / 24</td></tr>
+        <tr><td>Ligand formal charge (<i>e</i>)</td><td class="n">+0.999</td><td class="n">+0.998</td></tr>
+        <tr><td>Initial cell (nm)</td><td class="n">6.05 &times; 6.03 &times; 15.01</td><td class="n">5.96 &times; 6.02 &times; 14.95</td></tr>
+        <tr><td>Conversion energy difference (kJ mol<sup>&minus;1</sup>)</td><td class="n">0.004</td><td class="n">0.013</td></tr>
+        <tr><td>Reference LJ-14 (kJ mol<sup>&minus;1</sup>)</td><td class="n">4495.336</td><td class="n">4505.103</td></tr>
+        <tr><td>Reference Coulomb-14 (kJ mol<sup>&minus;1</sup>)</td><td class="n">77585.020</td><td class="n">78147.017</td></tr>
+        <tr><td>Production throughput (ns day<sup>&minus;1</sup>)</td><td class="n">296&ndash;325</td><td class="n">310&ndash;327</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <caption><b>Table 2. Primary observables, 30&ndash;100 ns.</b> Mean &plusmn; standard error over five replicas. Frames within a replica are autocorrelated and are not treated as independent observations.</caption>
+      <thead><tr><th>Observable</th><th class="n">MM1</th><th class="n">MM2</th><th class="n">MM2 &minus; MM1</th></tr></thead>
+      <tbody>
+        <tr><td>Axle tilt from membrane plane (&deg;)</td><td class="n">27.9 &plusmn; 6.1</td><td class="n">36.8 &plusmn; 5.5</td><td class="n">+8.8 &plusmn; 8.2</td></tr>
+        <tr><td>Replica means (&deg;)</td><td class="n">15, 25, 49, 34, 17</td><td class="n">27, 34, 54, 45, 25</td><td class="n">&mdash;</td></tr>
+        <tr><td>Frames below 30&deg; (fraction)</td><td class="n">0.61</td><td class="n">0.38</td><td class="n">&mdash;</td></tr>
+        <tr><td>Axle height above midplane (&Aring;)</td><td class="n">15.5 &plusmn; 0.2</td><td class="n">14.2 &plusmn; 0.7</td><td class="n">&minus;1.4 &plusmn; 0.8</td></tr>
+        <tr><td>Ammonium height above midplane (&Aring;)</td><td class="n">19.9 &plusmn; 0.8</td><td class="n">21.4 &plusmn; 0.6</td><td class="n">+1.5 &plusmn; 0.9</td></tr>
+        <tr><td>Phosphorus interleaflet separation (nm)</td><td class="n">4.10 &plusmn; 0.03</td><td class="n">4.11 &plusmn; 0.02</td><td class="n">&mdash;</td></tr>
+        <tr><td>Area per lipid (&Aring;<sup>2</sup>)</td><td class="n">57.3 &plusmn; 0.5</td><td class="n">57.2 &plusmn; 0.3</td><td class="n">&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <caption><b>Table 3. Sampling adequacy of the tilt coordinate.</b> The final row is the central diagnostic: observed scatter between replica means divided by the scatter predicted from within-replica statistics. A value near unity would indicate that trajectory length is the limiting resource.</caption>
+      <thead><tr><th>Quantity</th><th class="n">MM1</th><th class="n">MM2</th></tr></thead>
+      <tbody>
+        <tr><td>Integrated autocorrelation time (ns)</td><td class="n">4.13</td><td class="n">3.77</td></tr>
+        <tr><td>Independent samples per 70 ns window</td><td class="n">8.5</td><td class="n">9.3</td></tr>
+        <tr><td>Within-replica standard deviation (&deg;)</td><td class="n">10.8</td><td class="n">12.6</td></tr>
+        <tr><td>Predicted scatter of a replica mean (&deg;)</td><td class="n">3.70</td><td class="n">4.14</td></tr>
+        <tr><td>Observed scatter of replica means (&deg;)</td><td class="n">13.72</td><td class="n">12.21</td></tr>
+        <tr><td><b>Ratio, observed / predicted</b></td><td class="n"><b>3.7</b></td><td class="n"><b>2.9</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <caption><b>Table 4. Quantum-chemical audit of ligand torsions.</b> GFN2-xTB relaxed scans versus the GAFF2 parameters used in production. Root-mean-square thermal amplitude is derived from a quadratic fit about the minimum at 300 K.</caption>
+      <thead><tr><th>Quantity</th><th class="n">C=C twist</th><th class="n">Aryl&ndash;amine</th></tr></thead>
+      <tbody>
+        <tr><td>Torsional span of classical profile (kcal mol<sup>&minus;1</sup>)</td><td class="n">23.5</td><td class="n">6.5</td></tr>
+        <tr><td>Non-bonded span of classical profile (kcal mol<sup>&minus;1</sup>)</td><td class="n">4.9</td><td class="n">11.6</td></tr>
+        <tr><td>Comparison diagnostic of torsion parameters?</td><td class="n">yes</td><td class="n">no</td></tr>
+        <tr><td>Quantum minimum (&deg;)</td><td class="n">&minus;0.1</td><td class="n">&minus;150.0</td></tr>
+        <tr><td>Classical minimum (&deg;)</td><td class="n">+19.5</td><td class="n">+129.9</td></tr>
+        <tr><td>RMS thermal amplitude, quantum (&deg;)</td><td class="n">9.8</td><td class="n">14.8</td></tr>
+        <tr><td>RMS thermal amplitude, classical (&deg;)</td><td class="n">9.4</td><td class="n">14.0</td></tr>
+        <tr><td>RMSD within 40&deg; of minimum (kcal mol<sup>&minus;1</sup>)</td><td class="n">4.25</td><td class="n">7.51</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="sec">Supplementary material</h2>
+  <figure>
+    <video controls preload="metadata" playsinline muted loop poster="media/fig1-cross-section.png" aria-label="Supplementary Video S1, motor tracked through 100 nanoseconds">
+      <source src="media/video-s1-closeup.mp4" type="video/mp4">
+    </video>
+    <figcaption><b>Supplementary Video S1.</b> MM1 replica 1, complete 100 ns trajectory, camera tracking the ligand centre of mass. One second corresponds to 5 ns. Displayed coordinates are smoothed over 1 ns; analysis uses unsmoothed data. <b>Video S2</b> (bilayer cross-section) is provided in the repository.</figcaption>
+  </figure>
+
+  <h2 class="sec">Data and code availability</h2>
+  <p>All analysis scripts, simulation parameter files, per-replica numerical results, the quantum scan data and the rendering pipeline are deposited at <a href="https://github.com/joecampdb/molecular-motors-in-membranes">github.com/joecampdb/molecular-motors-in-membranes</a>. Production trajectories total approximately 15 GB and are available from the corresponding author. Per-replica time series underlying Figure 2 and Table 2 are provided as <code>data/summary.json</code>; sampling statistics as <code>data/sampling-power.json</code>; torsion profiles as <code>data/torsion-validation.json</code>.</p>
+
+  <h2 class="sec">Author contributions</h2>
+  <p>Conceptualisation, methodology, investigation, formal analysis, software, visualisation, writing &mdash; both authors. Both authors approved the submitted version.</p>
+
+  <h2 class="sec">Competing interests</h2>
+  <p>The authors declare no competing financial interests. [Institutional and commercial affiliations to be declared prior to deposition.]</p>
+
+  <h2 class="sec">References</h2>
+  <ol class="refs">
+    <li>Santos, A. L. <i>et al.</i> Light-activated molecular machines are fast-acting broad-spectrum antibacterials that target the membrane. <i>Science Advances</i> <b>8</b>, eabm2055 (2022). <a href="https://doi.org/10.1126/sciadv.abm2055">doi:10.1126/sciadv.abm2055</a></li>
+    <li>Zhou, J. <i>et al.</i> Modular peptide nanofibres that self-assemble on bacterial membranes overcome antimicrobial resistance. <i>Nature Biomedical Engineering</i> (2026). <a href="https://doi.org/10.1038/s41551-026-01680-0">doi:10.1038/s41551-026-01680-0</a></li>
+    <li>Dickson, C. J. <i>et al.</i> Lipid21: complex lipid membrane simulations with AMBER. <i>Journal of Chemical Theory and Computation</i> (2022).</li>
+    <li>Schott-Verdugo, S. &amp; Gohlke, H. PACKMOL-Memgen: a simple-to-use, generalized workflow for membrane-protein/lipid-bilayer system building. <i>Journal of Chemical Information and Modeling</i> (2019).</li>
+    <li>Bannwarth, C., Ehlert, S. &amp; Grimme, S. GFN2-xTB: an accurate and broadly parametrized self-consistent tight-binding quantum chemical method. <i>Journal of Chemical Theory and Computation</i> (2019).</li>
+    <li>Wang, J., Wolf, R. M., Caldwell, J. W., Kollman, P. A. &amp; Case, D. A. Development and testing of a general Amber force field. <i>Journal of Computational Chemistry</i> (2004).</li>
+    <li>Abraham, M. J. <i>et al.</i> GROMACS: high performance molecular simulations through multi-level parallelism from laptops to supercomputers. <i>SoftwareX</i> (2015).</li>
+    <li>Eastman, P. <i>et al.</i> OpenMM 7: rapid development of high performance algorithms for molecular dynamics. <i>PLoS Computational Biology</i> (2017).</li>
+    <li>Sokal, A. D. Monte Carlo methods in statistical mechanics: foundations and new algorithms. <i>Cours de Troisi&egrave;me Cycle de la Physique en Suisse Romande</i> (1989).</li>
+  </ol>
+  <p class="note">Bibliographic details for references 3&ndash;9 give author, title, journal and year; volume and article numbers should be verified against the publisher of record before deposition.</p>
+
+  <div class="foot">
+    Preprint, not peer reviewed. Prepared for deposition; DOI to be assigned by the host repository. Figures and underlying data are released with the code repository cited above.
+  </div>
+</div>

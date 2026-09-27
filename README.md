@@ -21,6 +21,26 @@ the two leaflet planes read at a glance.
 
 ---
 
+## The manuscript
+
+A preprint-style write-up of everything below is in [`paper/`](paper/), in three forms:
+
+| File | Notes |
+| --- | --- |
+| [`paper/motors-in-the-membrane.pdf`](paper/motors-in-the-membrane.pdf) | 13 pages, print layout, static figures |
+| [`paper/motors-in-the-membrane.epub`](paper/motors-in-the-membrane.epub) | EPUB 3; the two trajectories are embedded as **animated** figures, since readers support GIF far more consistently than video |
+| [`paper/motors-in-the-membrane.html`](paper/motors-in-the-membrane.html) | source of both, and the web version |
+
+It carries no DOI. The identifier field is deliberately left unassigned rather than filled with a
+plausible-looking string; mint one on deposition. Author names, affiliations, competing interests
+and licence are placeholders to be completed before posting. Bibliographic details for the software
+references should be checked against the publishers of record.
+
+Both derivatives are rebuilt from the HTML by
+[`scripts/paper/build_docs.py`](scripts/paper/build_docs.py).
+
+---
+
 ## The question
 
 Zhou and co-workers at Westlake University built modular peptide nanofibres that self-assemble on
