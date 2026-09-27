@@ -1,0 +1,23 @@
+; steepest-descent minimisation of the packed system (Amber Lipid21 + GAFF2 + TIP3P settings)
+integrator              = steep
+emtol                   = 500.0
+emstep                  = 0.01
+nsteps                  = 10000
+nstlist                 = 10
+cutoff-scheme           = Verlet
+coulombtype             = PME
+rcoulomb                = 1.0
+rvdw                    = 1.0
+vdwtype                 = Cut-off
+vdw-modifier            = Potential-shift
+DispCorr                = EnerPres
+fourierspacing          = 0.12
+pme-order               = 4
+ewald-rtol              = 1e-5
+constraint-algorithm    = LINCS
+lincs-iter              = 1
+lincs-order             = 4
+comm-mode               = Linear
+nstcomm                 = 100
+comm-grps               = System
+constraints             = none

@@ -1,0 +1,122 @@
+{
+  "scope": "Route A build of MM1/MM2 in POPE:POPG bilayers: Amber Lipid21 + GAFF2 (AM1-BCC) + TIP3P; independent replication with a different force-field family than the source paper (CHARMM36 + CGenFF). No MD steps run.",
+  "date": "2026-09-22",
+  "systems": {
+    "MM1": {
+      "atoms": 39542,
+      "waters": 9368,
+      "ions": {
+        "Na+": 90,
+        "Cl-": 24
+      },
+      "POPE": 22,
+      "POPG": 67,
+      "box_A": [
+        60.455,
+        60.252,
+        150.057
+      ],
+      "net_charge_e": -0.000999,
+      "ligand_charge_e": 0.999001,
+      "initial_area_per_lipid_A2": 81.9,
+      "pose": {
+        "axle_tilt_from_membrane_plane_deg": 0.0,
+        "ammonium_N_position_A": [
+          2.673,
+          0.0,
+          17.0
+        ],
+        "axle_midpoint_A": [
+          0.0,
+          0.0,
+          10.073
+        ]
+      },
+      "preminimisation": {
+        "potential_before_kJ_mol": 60799246733959.77,
+        "potential_after_kJ_mol": -600434.7875572806,
+        "closest_contact_before_A": 0.203,
+        "closest_contact_after_A": 1.487,
+        "heavy_atom_rmsd_A": 1.718
+      },
+      "conversion_validation": {
+        "total_diff_kJ_mol": 0.004,
+        "LJ14_kJ_mol": 4495.336,
+        "Coulomb14_kJ_mol": 77585.02,
+        "pass": true
+      },
+      "gromacs_defaults": {
+        "nbfunc": "1",
+        "comb_rule": "2",
+        "gen_pairs": "no",
+        "fudgeLJ": "1",
+        "fudgeQQ": "0.83333333"
+      },
+      "pairs_all_explicit": true,
+      "settles": true,
+      "scnb_values_in_prmtop": [
+        0.0,
+        2.0,
+        6.0
+      ]
+    },
+    "MM2": {
+      "atoms": 39542,
+      "waters": 9368,
+      "ions": {
+        "Na+": 90,
+        "Cl-": 24
+      },
+      "POPE": 22,
+      "POPG": 67,
+      "box_A": [
+        59.581,
+        60.224,
+        149.541
+      ],
+      "net_charge_e": -0.002001,
+      "ligand_charge_e": 0.997999,
+      "initial_area_per_lipid_A2": 80.6,
+      "pose": {
+        "axle_tilt_from_membrane_plane_deg": 0.0,
+        "ammonium_N_position_A": [
+          -4.757,
+          -0.0,
+          17.0
+        ],
+        "axle_midpoint_A": [
+          0.0,
+          0.0,
+          10.742
+        ]
+      },
+      "preminimisation": {
+        "potential_before_kJ_mol": 182920116764.4178,
+        "potential_after_kJ_mol": -599787.4658103045,
+        "closest_contact_before_A": 0.313,
+        "closest_contact_after_A": 1.498,
+        "heavy_atom_rmsd_A": 1.742
+      },
+      "conversion_validation": {
+        "total_diff_kJ_mol": 0.013,
+        "LJ14_kJ_mol": 4505.103,
+        "Coulomb14_kJ_mol": 78147.017,
+        "pass": true
+      },
+      "gromacs_defaults": {
+        "nbfunc": "1",
+        "comb_rule": "2",
+        "gen_pairs": "no",
+        "fudgeLJ": "1",
+        "fudgeQQ": "0.83333333"
+      },
+      "pairs_all_explicit": true,
+      "settles": true,
+      "scnb_values_in_prmtop": [
+        0.0,
+        2.0,
+        6.0
+      ]
+    }
+  }
+}
