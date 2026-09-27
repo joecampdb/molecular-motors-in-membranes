@@ -1,0 +1,16 @@
+{
+ "twist": {
+  "range_total_kcal": 20.546975789875006,
+  "range_nonbonded_kcal": 4.880694276106979,
+  "range_torsion_kcal": 23.47966794336608,
+  "ammonium_to_ring_A_min": 4.25,
+  "ammonium_to_ring_A_max": 4.49
+ },
+ "arylN": {
+  "range_total_kcal": 30.559389615779608,
+  "range_nonbonded_kcal": 11.58251569681984,
+  "range_torsion_kcal": 6.517819364720712,
+  "ammonium_to_ring_A_min": 4.18,
+  "ammonium_to_ring_A_max": 4.82
+ }
+}

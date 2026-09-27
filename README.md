@@ -89,6 +89,60 @@ timescales, so a single 100 ns trajectory can land almost anywhere in that range
 28° to 40° across its 100 ns, and MM1's axle drifts outward by about 3 Å. These are trends, not
 equilibrium values. The bilayer itself does settle, plateauing after roughly 50 ns.
 
+### How much sampling would this actually take?
+
+[`scripts/analysis/15_sampling_power_jax.py`](scripts/analysis/15_sampling_power_jax.py), run on the
+GPU. The tilt signal has an integrated autocorrelation time of about 3.9 ns, so a 70 ns analysis
+window holds roughly **8 effectively independent samples**, not the 7,000 frames that were written.
+
+The more useful number is the mismatch. From the within-replica statistics, the mean of a single
+replica should scatter by about 3.7°. The observed scatter between replica means is 13°, **3.5 times
+larger**. Frames inside one trajectory are therefore not the limiting resource: there is a slow
+coordinate that a single 100 ns run does not sample at all. Running each replica longer buys far
+less than running more independent replicas.
+
+That also sharpens the negative result. With the observed scatter and five replicas per motor, the
+standard error on the difference between the two motors is 8.2°. A genuine 45° contrast would sit
+**5.5 standard errors** away and could not have been missed. So this is not merely "we could not
+resolve it":
+
+> These simulations are **inconsistent with a 45° orientation difference** between MM1 and MM2, and
+> consistent with anything from zero to roughly 25°, under this force field.
+
+To pin the measured 8.8° difference down to two standard errors would need about **17 independent
+replicas per motor**, each with a genuinely different starting configuration. That is a concrete,
+affordable target: roughly a week on the same single GPU, and far cheaper than the microseconds a
+naive reading of the autocorrelation time would suggest.
+
+### Does the force field describe the motor's own core?
+
+![GFN2-xTB versus GAFF2 torsion profiles](figures/torsion-validation.png)
+
+The obvious objection to everything above is that the ligand parameters were filled in by analogy,
+with penalty scores up to 541 on exactly the torsions that define the motor. So we tested them:
+relaxed torsion scans with GFN2-xTB against the GAFF2 parameters actually used, same molecule, same
+atom indexing, in [`scripts/qm/`](scripts/qm/). Minutes of compute, not hours.
+
+**The alkene twist is a fair test and it half passes.** Torsion terms dominate the force-field
+profile there (a 23.5 kcal/mol span against 4.9 from nonbonded), so the comparison is really about
+the parameters. The *curvature* is good: GAFF2 implies a root-mean-square thermal twist of 9.4° at
+300 K against 9.8° from xTB, so the core's stiffness, and hence how much it wobbles during MD, is
+about right. The *resting geometry* is not. xTB puts the minimum at 0°, essentially planar; GAFF2
+puts it at +20°. Since the measured observable is the orientation of that very C=C, a systematic 20°
+twist of the core is a real concern, and a specific, fixable one: refit those torsions to this scan.
+
+**The aryl–amine scan turned out not to test what it looked like it tested.** GAFF2 gives it a 15
+kcal/mol span against 3.7 from xTB, which looks damning until the energy is decomposed: 11.6 kcal/mol
+of that is nonbonded and only 6.5 is torsion terms. In vacuum a +1 tail folding back toward the ring
+produces electrostatics that would be screened in a solvated membrane. It is not evidence against the
+torsion parameters, and it is not used as such. Checking this took one extra script and changed the
+conclusion, which is the argument for doing the decomposition rather than reporting the first number.
+
+Caveats: GFN2-xTB is semi-empirical tight binding, so the region near the minimum is trustworthy and
+strongly twisted geometries, where an overcrowded alkene acquires diradical character, are not. Both
+scans are in vacuum. The force-field curve has a small discontinuity where the restrained minimisation
+jumps branch.
+
 ## What we infer is useful here
 
 **A licence-free membrane MD pipeline is a real capability, not a compromise.** The whole thing
@@ -102,8 +156,13 @@ within reach. What is not within reach is anything needing microsecond-per-repli
 
 **Replica spread is the finding, not noise to average away.** Five runs of the identical system gave
 tilt means from 15° to 54°. A single trajectory would have produced a confident, publishable-looking
-number anywhere in that range. The most useful output of this work is arguably the size of that
-spread, because it sets the sampling any future claim about motor orientation has to clear.
+number anywhere in that range. Quantifying that spread is what turns "we could not reproduce it"
+into the much stronger "a 45° contrast is excluded at 5.5 standard errors, and 17 independent
+replicas would settle the rest" — and it costs an afternoon of analysis on data you already have.
+
+**Spend an hour checking the parameters you inherited.** A semi-empirical torsion scan of the ligand
+took minutes and found a 20° error in the resting geometry of the exact bond being measured. Any
+paper reporting this observable should show that scan; almost none do.
 
 **Where a force field is weakest is exactly where the interesting science is.** Automated
 parameter assignment filled the torsions across the motor's overcrowded C=C axle by analogy, with
@@ -157,9 +216,11 @@ never excluded them. Dropping both took the scene from 11,414 atoms to 4,560 and
 
 - **Different force field from the study being compared against.** This uses Amber Lipid21 lipids,
   GAFF2/AM1-BCC for the ligand and Amber TIP3P. The original used CHARMM36 with CGenFF. Agreement or
-  disagreement reflects force field and sampling as much as molecular behaviour.
+  disagreement reflects force field and sampling as much as molecular behaviour. The torsion scan
+  above puts a number on part of that: a 20° offset in the resting twist of the measured bond.
 - **One starting pose per motor.** The five replicas differ by velocity seed only, so they sample one
-  initial condition five times rather than five independent conditions.
+  initial condition five times rather than five independent conditions. The sampling analysis above
+  shows this is the binding constraint, not trajectory length.
 - **100 ns per replica, with visible drift.** The 30–100 ns analysis window is a compromise, not a
   demonstration of equilibrium.
 - **A model membrane, not a bacterial envelope.** 89 lipids of two species. Nothing here speaks to
@@ -171,9 +232,11 @@ never excluded them. Dropping both took the scene from 11,414 atoms to 4,560 and
 
 ## What would settle the open question
 
-Pose-varied starting structures with restrained equilibration; 300–500 ns per replica, or many more
-short ones; a quantum-chemical torsion scan to replace the analogy-fitted axle parameters; and, if a
-direct comparison to the original is required, the same protocol under CHARMM36 with a CGenFF licence.
+About 17 independent replicas per motor, built from genuinely different starting poses with
+restrained equilibration, which the sampling analysis says is worth far more than longer runs. Then
+refit the axle torsions against the scan in `data/torsion-validation.json` and repeat, to separate
+the force-field offset from the physics. If a direct comparison to the original is required, the same
+protocol under CHARMM36 with a CGenFF licence.
 
 ## Reproducing
 

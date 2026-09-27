@@ -1,0 +1,226 @@
+{
+ "window_ns": [
+  30.0,
+  100.0
+ ],
+ "dt_ns": 0.01,
+ "per_replica": [
+  {
+   "motor": "MM1",
+   "replica": 1,
+   "T_ns": 70.01,
+   "mean_deg": 15.258089415797741,
+   "sd_deg": 7.95490432527566,
+   "tau_int_ns": 3.046520059920461,
+   "n_eff": 11.49015903769034,
+   "window_frames": 1829,
+   "sem_within_deg": 2.346777635273549
+  },
+  {
+   "motor": "MM1",
+   "replica": 2,
+   "T_ns": 70.01,
+   "mean_deg": 24.46050964147979,
+   "sd_deg": 8.641071261726086,
+   "tau_int_ns": 2.4458026011231064,
+   "n_eff": 14.312275235918792,
+   "window_frames": 1468,
+   "sem_within_deg": 2.2840901818355084
+  },
+  {
+   "motor": "MM1",
+   "replica": 3,
+   "T_ns": 70.01,
+   "mean_deg": 48.81214197971718,
+   "sd_deg": 15.645506657480526,
+   "tau_int_ns": 4.047257318778155,
+   "n_eff": 8.649067070083852,
+   "window_frames": 2431,
+   "sem_within_deg": 5.319918747677916
+  },
+  {
+   "motor": "MM1",
+   "replica": 4,
+   "T_ns": 70.01,
+   "mean_deg": 33.752519354377945,
+   "sd_deg": 10.599048448203988,
+   "tau_int_ns": 5.720448951100426,
+   "n_eff": 6.119274955380241,
+   "window_frames": 3434,
+   "sem_within_deg": 4.284665212831394
+  },
+  {
+   "motor": "MM1",
+   "replica": 5,
+   "T_ns": 70.01,
+   "mean_deg": 17.422788601628337,
+   "sd_deg": 10.962015123045386,
+   "tau_int_ns": 5.399904099642357,
+   "n_eff": 6.482522532635058,
+   "window_frames": 3240,
+   "sem_within_deg": 4.305448307986431
+  },
+  {
+   "motor": "MM2",
+   "replica": 1,
+   "T_ns": 70.01,
+   "mean_deg": 26.466643765176403,
+   "sd_deg": 9.683469078984556,
+   "tau_int_ns": 2.3806015631682773,
+   "n_eff": 14.70426657765141,
+   "window_frames": 1430,
+   "sem_within_deg": 2.525278529837765
+  },
+  {
+   "motor": "MM2",
+   "replica": 2,
+   "T_ns": 70.01,
+   "mean_deg": 33.72777103270961,
+   "sd_deg": 13.500356939365743,
+   "tau_int_ns": 6.406441330197379,
+   "n_eff": 5.464031932205569,
+   "window_frames": 3846,
+   "sem_within_deg": 5.7754873465957655
+  },
+  {
+   "motor": "MM2",
+   "replica": 3,
+   "T_ns": 70.01,
+   "mean_deg": 53.79141479788602,
+   "sd_deg": 12.601218486045743,
+   "tau_int_ns": 2.579020679834091,
+   "n_eff": 13.572981509497582,
+   "window_frames": 1549,
+   "sem_within_deg": 3.4203843678382464
+  },
+  {
+   "motor": "MM2",
+   "replica": 4,
+   "T_ns": 70.01,
+   "mean_deg": 44.5304443650907,
+   "sd_deg": 12.66245241320394,
+   "tau_int_ns": 5.142724940247464,
+   "n_eff": 6.806702751307479,
+   "window_frames": 3086,
+   "sem_within_deg": 4.853437412570815
+  },
+  {
+   "motor": "MM2",
+   "replica": 5,
+   "T_ns": 70.01,
+   "mean_deg": 25.331112555349236,
+   "sd_deg": 14.631514524815978,
+   "tau_int_ns": 2.3305819355299393,
+   "n_eff": 15.019853825495472,
+   "window_frames": 1401,
+   "sem_within_deg": 3.77534313170261
+  }
+ ],
+ "per_motor": {
+  "MM1": {
+   "replica_means_deg": [
+    15.26,
+    24.46,
+    48.81,
+    33.75,
+    17.42
+   ],
+   "mean_deg": 27.941209798600198,
+   "sem_over_replicas_deg": 6.13588269757173,
+   "sd_within_replica_deg": 10.76050916314633,
+   "tau_int_ns": 4.131986606112902,
+   "n_eff_per_replica": 8.471711875399901,
+   "sem_predicted_from_one_replica_deg": 3.6969811243306956,
+   "sd_between_replica_means_deg": 13.720250813735172,
+   "underdispersion_ratio": 3.7112039126840544
+  },
+  "MM2": {
+   "replica_means_deg": [
+    26.47,
+    33.73,
+    53.79,
+    44.53,
+    25.33
+   ],
+   "mean_deg": 36.7694773032424,
+   "sem_over_replicas_deg": 5.459924495182096,
+   "sd_within_replica_deg": 12.615802288483192,
+   "tau_int_ns": 3.7678740897954297,
+   "n_eff_per_replica": 9.290384754311294,
+   "sem_predicted_from_one_replica_deg": 4.139024756737035,
+   "sd_between_replica_means_deg": 12.208762323243391,
+   "underdispersion_ratio": 2.9496712488542993
+  }
+ },
+ "device": "cuda:0",
+ "requirements": [
+  {
+   "delta_deg": 45.0,
+   "n_replicas": 5,
+   "T_per_replica_ns_if_only_fast_motion": 1.7054396760373682,
+   "total_ns_if_only_fast_motion": 8.52719838018684,
+   "n_replicas_needed_given_observed_scatter": 0.6640135528470191
+  },
+  {
+   "delta_deg": 45.0,
+   "n_replicas": 10,
+   "T_per_replica_ns_if_only_fast_motion": 0.8527198380186841,
+   "total_ns_if_only_fast_motion": 8.52719838018684,
+   "n_replicas_needed_given_observed_scatter": 0.6640135528470191
+  },
+  {
+   "delta_deg": 45.0,
+   "n_replicas": 20,
+   "T_per_replica_ns_if_only_fast_motion": 0.42635991900934206,
+   "total_ns_if_only_fast_motion": 8.52719838018684,
+   "n_replicas_needed_given_observed_scatter": 0.6640135528470191
+  },
+  {
+   "delta_deg": 20.0,
+   "n_replicas": 5,
+   "T_per_replica_ns_if_only_fast_motion": 8.633788359939176,
+   "total_ns_if_only_fast_motion": 43.16894179969588,
+   "n_replicas_needed_given_observed_scatter": 3.361568611288034
+  },
+  {
+   "delta_deg": 20.0,
+   "n_replicas": 10,
+   "T_per_replica_ns_if_only_fast_motion": 4.316894179969588,
+   "total_ns_if_only_fast_motion": 43.16894179969588,
+   "n_replicas_needed_given_observed_scatter": 3.361568611288034
+  },
+  {
+   "delta_deg": 20.0,
+   "n_replicas": 20,
+   "T_per_replica_ns_if_only_fast_motion": 2.158447089984794,
+   "total_ns_if_only_fast_motion": 43.16894179969588,
+   "n_replicas_needed_given_observed_scatter": 3.361568611288034
+  },
+  {
+   "delta_deg": 8.8,
+   "n_replicas": 5,
+   "T_per_replica_ns_if_only_fast_motion": 44.59601425588417,
+   "total_ns_if_only_fast_motion": 222.98007127942086,
+   "n_replicas_needed_given_observed_scatter": 17.36347423185968
+  },
+  {
+   "delta_deg": 8.8,
+   "n_replicas": 10,
+   "T_per_replica_ns_if_only_fast_motion": 22.298007127942086,
+   "total_ns_if_only_fast_motion": 222.98007127942086,
+   "n_replicas_needed_given_observed_scatter": 17.36347423185968
+  },
+  {
+   "delta_deg": 8.8,
+   "n_replicas": 20,
+   "T_per_replica_ns_if_only_fast_motion": 11.149003563971043,
+   "total_ns_if_only_fast_motion": 222.98007127942086,
+   "n_replicas_needed_given_observed_scatter": 17.36347423185968
+  }
+ ],
+ "inputs_for_requirements": {
+  "sd_within_deg": 11.68815572581476,
+  "tau_int_ns": 3.9499303479541656,
+  "sd_between_deg": 12.96450656848928
+ }
+}
