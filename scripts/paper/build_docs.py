@@ -20,8 +20,12 @@ import zipfile
 from datetime import datetime, timezone
 
 import lxml.etree as ET
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lxml.html
 from PIL import Image
+
+import arxiv_css
 
 SRC, ASSETS, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 os.makedirs(OUT, exist_ok=True)
@@ -31,7 +35,7 @@ TITLE = re.search(r"<title>(.*?)</title>", raw, re.S).group(1).strip()
 body = raw[raw.index('<div class="sheet">'):]
 body = body[:body.rindex("</div>") + 6]
 
-AUTHORS = "[Author One]; [Author Two]"
+AUTHORS = "Joseph Campagna"
 UID = "urn:uuid:" + str(uuid.uuid5(uuid.NAMESPACE_URL, "motors-in-the-membrane/preprint/v1"))
 NOW = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -78,15 +82,7 @@ sup.cite{font-size:.7em;color:#1d4e89}
 a{color:#1d4e89}
 """
 
-PRINT_CSS = BASE_CSS + """
-@page{size:A4;margin:19mm 17mm 20mm}
-html{font-size:10.5pt}
-.sheet{max-width:none;padding:0}
-figure,.tablewrap,table,.callout,.abstract{break-inside:avoid;page-break-inside:avoid}
-h2.sec,h3{break-after:avoid;page-break-after:avoid}
-figure img{max-height:118mm;object-fit:contain}
-a{text-decoration:none}
-"""
+PRINT_CSS = BASE_CSS + arxiv_css.CSS
 
 EPUB_CSS = BASE_CSS + """
 html{font-size:100%}
@@ -119,8 +115,13 @@ for g in GIFS:
 VIDEO_BLOCK = re.search(r"<figure>\s*<video.*?</figure>", body, re.S).group(0)
 
 
+HEAD_RE = re.compile(r'<div class="banner">.*?</p>\s*(?=<div class="meta">)', re.S)
+
+
 def rewrite(markup, for_epub):
     m = markup
+    if not for_epub:
+        m = HEAD_RE.sub(arxiv_css.TITLE_BLOCK.format(stamp=arxiv_css.STAMP), m, count=1)
     for name in FIGS:
         m = m.replace('src="media/%s"' % name, 'src="%s%s"' % ("images/" if for_epub else "_img/",
                                                                name.replace(".png", ".jpg")))

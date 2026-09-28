@@ -27,14 +27,17 @@ A preprint-style write-up of everything below is in [`paper/`](paper/), in three
 
 | File | Notes |
 | --- | --- |
-| [`paper/motors-in-the-membrane.pdf`](paper/motors-in-the-membrane.pdf) | 13 pages, print layout, static figures |
+| [`paper/motors-in-the-membrane.pdf`](paper/motors-in-the-membrane.pdf) | 11 pages, arXiv/LaTeX article layout, static figures |
 | [`paper/motors-in-the-membrane.epub`](paper/motors-in-the-membrane.epub) | EPUB 3; the two trajectories are embedded as **animated** figures, since readers support GIF far more consistently than video |
 | [`paper/motors-in-the-membrane.html`](paper/motors-in-the-membrane.html) | source of both, and the web version |
 
-It carries no DOI. The identifier field is deliberately left unassigned rather than filled with a
-plausible-looking string; mint one on deposition. Author names, affiliations, competing interests
-and licence are placeholders to be completed before posting. Bibliographic details for the software
-references should be checked against the publishers of record.
+Author: Joseph Campagna, PSM (Freelance Research).
+
+It carries no DOI and no arXiv identifier. Both fields are deliberately left as visible placeholders
+rather than filled with plausible-looking strings, since an identifier that reads as real on an
+undeposited document propagates as a false record; mint them on deposition. The licence is still to
+be selected, and bibliographic details for the software references should be checked against the
+publishers of record before posting.
 
 Both derivatives are rebuilt from the HTML by
 [`scripts/paper/build_docs.py`](scripts/paper/build_docs.py).

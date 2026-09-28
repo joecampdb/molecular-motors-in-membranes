@@ -71,20 +71,22 @@
     <span>Preprint &middot; not peer reviewed</span>
     <span>Computational biophysics</span>
     <span>Posted 27 September 2026</span>
+    <span>q-bio.BM</span>
   </div>
 
   <h1>Motors in the Membrane</h1>
   <p class="subtitle">Ten-replica atomistic simulation of light-driven molecular motors in a bacterial-mimetic bilayer, with a measured sampling floor and a quantum-chemical audit of the ligand force field</p>
 
-  <p class="authors">[Author One]<sup>1,*</sup>, [Author Two]<sup>1</sup></p>
-  <p class="affil"><sup>1</sup> Independent computational biophysics group</p>
-  <p class="corr"><sup>*</sup> Correspondence to the address listed in the repository metadata</p>
+  <p class="authors">Joseph Campagna, PSM</p>
+  <p class="affil">Freelance Research</p>
+  <p class="corr">Correspondence: see repository metadata</p>
 
   <div class="meta">
     <span><b>DOI</b> not yet assigned &mdash; to be minted on deposition</span>
     <span><b>Preprint server</b> not yet deposited</span>
     <span><b>Code and data</b> github.com/joecampdb/molecular-motors-in-membranes</span>
     <span><b>Aggregate sampling</b> 1.0 &micro;s &middot; 10 &times; 100 ns &middot; 76 h wall clock &middot; 1 &times; NVIDIA RTX 4070</span>
+    <span><b>Subject class</b> q-bio.BM &middot; physics.bio-ph &middot; physics.comp-ph</span>
     <span><b>License</b> to be selected prior to deposition</span>
   </div>
 
@@ -145,7 +147,7 @@
 
   <figure>
     <img class="plot" src="media/fig1-cross-section.png" alt="Cross-section of the simulated bilayer with the motor in the upper leaflet" width="1920" height="1080" style="height:auto">
-    <figcaption><b>Figure 1. Simulated system.</b> Cross-section through the POPE:POPG bilayer with MM1 resident in the upper leaflet at 40 ns of replica 1. The motor is rendered in warm tones against a desaturated membrane; the rotor axle carbons are marked in red and the protonated ammonium in green; cyan spheres are lipid phosphorus atoms delineating the two leaflet planes. Lipids anterior to the motor are removed each frame to expose the binding pocket. Water and ions are omitted and lipid hydrogens are not drawn. Scale bar 1 nm (exact; orthographic projection). Animations of the full trajectory are provided as Supplementary Videos S1 and S2.</figcaption>
+    <figcaption><b>Figure 1. Simulated system.</b> Cross-section through the POPE:POPG bilayer with MM1 resident in the upper leaflet at 60 ns of replica 1. The motor is rendered in warm tones against a desaturated membrane; the rotor axle carbons are marked in red and the protonated ammonium in green; cyan spheres are lipid phosphorus atoms delineating the two leaflet planes. Lipids anterior to the motor are removed each frame to expose the binding pocket. Water and ions are omitted and lipid hydrogens are not drawn. Scale bar 1 nm (exact; orthographic projection). Animations of the full trajectory are provided as Supplementary Videos S1 and S2.</figcaption>
   </figure>
 
   <h3>3.1 Membrane integrity and system stability</h3>
@@ -281,13 +283,13 @@
   </figure>
 
   <h2 class="sec">Data and code availability</h2>
-  <p>All analysis scripts, simulation parameter files, per-replica numerical results, the quantum scan data and the rendering pipeline are deposited at <a href="https://github.com/joecampdb/molecular-motors-in-membranes">github.com/joecampdb/molecular-motors-in-membranes</a>. Production trajectories total approximately 15 GB and are available from the corresponding author. Per-replica time series underlying Figure 2 and Table 2 are provided as <code>data/summary.json</code>; sampling statistics as <code>data/sampling-power.json</code>; torsion profiles as <code>data/torsion-validation.json</code>.</p>
+  <p>All analysis scripts, simulation parameter files, per-replica numerical results, the quantum scan data and the rendering pipeline are deposited at <a href="https://github.com/joecampdb/molecular-motors-in-membranes">github.com/joecampdb/molecular-motors-in-membranes</a>. Production trajectories total approximately 15 GB and are available from the author on request. Per-replica time series underlying Figure 2 and Table 2 are provided as <code>data/summary.json</code>; sampling statistics as <code>data/sampling-power.json</code>; torsion profiles as <code>data/torsion-validation.json</code>.</p>
 
   <h2 class="sec">Author contributions</h2>
-  <p>Conceptualisation, methodology, investigation, formal analysis, software, visualisation, writing &mdash; both authors. Both authors approved the submitted version.</p>
+  <p>J.C. conceived the study, designed and executed the computational workflow, performed all simulations, analysis and quantum-chemical calculations, produced the figures and wrote the manuscript.</p>
 
   <h2 class="sec">Competing interests</h2>
-  <p>The authors declare no competing financial interests. [Institutional and commercial affiliations to be declared prior to deposition.]</p>
+  <p>The author declares no competing financial interests.</p>
 
   <h2 class="sec">References</h2>
   <ol class="refs">
